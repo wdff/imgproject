@@ -1,8 +1,0 @@
-extends layout
-
-block content
-    h1= title
-        form#newthread(name="newthread",method="post",action="/postthread")
-            input#op(type="text",placeholder="Username", name="username")
-            textarea#postContent(rows="4", placeholder="Your Post", name="postcontent")
-            button#newThread(type="submit") submit

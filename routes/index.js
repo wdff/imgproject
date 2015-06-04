@@ -49,7 +49,6 @@ router.post('/deletethread', function(req, res) {
 
 /* POST a new thread */
 router.post('/postthread', function(req, res) {
-
     // get the db from the request
     var db = req.db;
 
@@ -72,13 +71,34 @@ router.post('/postthread', function(req, res) {
             res.location('/');
             res.redirect('/');
         }
-
     })
-
-
 })
 
+router.post('/newcomment', function(req, res) {
+    var db = req.db;
 
+    var threadId = req.body.threadid;
+    var userName = req.body.username || "Anonymous";
+    var comment = req.body.commentContent;
+
+    var collection = db.get('documents');
+
+    collection.update(
+        { "_id": threadId },
+        { "$push": { "comments": {
+            "posted": new Date().toString(),
+            "author": userName,
+            "comment": comment
+        }}
+    }, function(err, doc) {
+            if (err) {
+                res.send("Error saving your comment!");
+            } else {
+                res.location('/thread/' + threadId);
+                res.redirect('/thread/' + threadId);
+            }
+        })
+})
 
 
 module.exports = router;

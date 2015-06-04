@@ -1,9 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 Index lol
+  p Welcome to some nice shit
+  a(href='/delete') Delete Thread
+  br
+  a(href='/newthread') New Thread
   ul
     each post, i in posts
       li
-        span #{post.a} #{post.b} #{post.op} #{post.postContent}
+        span #{post._id} ::::: #{post.a} #{post.b} #{post.op} #{post.postContent}

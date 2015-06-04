@@ -2,6 +2,19 @@ extends layout
 
 block content
   h1= title
-  p Welcome to some nice shit, threadview yo
-  p #{posts[0].op}
-  p #{posts.postContent}
+    br
+    h2 >> #{posts[0].postTitle}
+
+  a(href='/') Back
+  p
+    span Posted by:
+    span #{posts[0].op}
+  p #{posts[0].postContent}
+
+
+  form#newComment(name="newComment",method="post",action="/newComment")
+    input#threadId(type="text",placeholder="Your Name (optional)", name="username")
+    br
+    textarea#comment(rows="4", placeholder="Your Comment", name="commentContent")
+    br
+    button#newComment(type="submit") submit

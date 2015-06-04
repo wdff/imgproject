@@ -55,6 +55,7 @@ router.post('/postthread', function(req, res) {
 
     // get the values
     var userName = req.body.username || "Anonymous";
+    var postTitle = req.body.posttitle || 'No Title';
     var postContent = req.body.postcontent;
 
     var collection = db.get('documents');
@@ -62,6 +63,7 @@ router.post('/postthread', function(req, res) {
     // insert
     collection.insert({
         "op": userName,
+        "postTitle": postTitle,
         "postContent": postContent
     }, function (err, doc) {
         if (err) {

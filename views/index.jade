@@ -9,4 +9,6 @@ block content
   ul
     each post, i in posts
       li
-        span #{post._id} ::::: #{post.a} #{post.b} #{post.op} #{post.postContent}
+        a(href="thread/#{post._id}")
+          //span #{post._id} >>>> #{post.op} >>>> #{post.postContent}
+          span #{post._id} >>>> #{post.op} >>>> #{post.postTitle}: #{post.postContent}

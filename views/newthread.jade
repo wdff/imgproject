@@ -2,7 +2,11 @@ extends layout
 
 block content
     h1= title
-    form#newThread(name="delthread",method="post",action="/deletethread")
-        input#threadId(type="text",placeholder="Thread ID", name="username")
+    form#newThread(name="newthread",method="post",action="/postthread")
+        input#op(type="text",placeholder="Your Name (optional)", name="username")
+        br
+        input#title(type="text",placeholder="Title (optional)", name="posttitle")
+        br
         textarea#postContent(rows="4", placeholder="Your Post", name="postcontent")
+        br
         button#newThread(type="submit") submit

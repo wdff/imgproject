@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  ul
+    each post, i in posts
+      li
+        span #{post.a} #{post.b} #{post.op} #{post.postContent}

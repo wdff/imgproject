@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     var db = req.db;
     var collection = db.get('documents');
-    collection.find({},{}, function(e,docs) {
+    collection.find( { $query: {}, $orderby: { "bumpedAt": -1 } },{}, function(e,docs) {
         res.render('index', { title: 'Index', posts: docs });
     })
 
@@ -56,6 +56,7 @@ router.post('/postthread', function(req, res) {
     var userName = req.body.username || "Anonymous";
     var postTitle = req.body.posttitle || 'No Title';
     var postContent = req.body.postcontent;
+    var createdAt = new Date();
 
     var collection = db.get('documents');
 
@@ -63,13 +64,15 @@ router.post('/postthread', function(req, res) {
     collection.insert({
         "op": userName,
         "postTitle": postTitle,
-        "postContent": postContent
+        "postContent": postContent,
+        "createdAt": createdAt,
+        "bumpedAt": createdAt
     }, function (err, doc) {
         if (err) {
             res.send("Error while saving your post.");
         } else {
-            res.location('/');
-            res.redirect('/');
+            res.location('/thread/' + doc._id);
+            res.redirect('/thread/' + doc._id);
         }
     })
 })
@@ -83,14 +86,21 @@ router.post('/newcomment', function(req, res) {
 
     var collection = db.get('documents');
 
+    var date = new Date();
+
     collection.update(
         { "_id": threadId },
-        { "$push": { "comments": {
-            "posted": new Date().toString(),
-            "author": userName,
-            "comment": comment
-        }}
-    }, function(err, doc) {
+        {
+            "$currentDate": { "bumpedAt": true },
+            "$push": {
+                "comments": {
+                    "posted": date,
+                    "author": userName,
+                    "comment": comment
+                }
+            }
+        }
+    , function(err, doc) {
             if (err) {
                 res.send("Error saving your comment!");
             } else {

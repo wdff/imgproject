@@ -5,4 +5,59 @@ body {
 
 a {
   color: #00B7FF;
+    text-decoration: none;
+}
+
+/* INDEX PAGE */
+.thread {
+    margin: 2px;
+    border: 1px solid #adadad;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+#postTitle {
+    font-size: 22px;
+}
+
+#createdAt {
+    font-style: italic;
+}
+
+#content {
+    font-size: 19px;
+}
+
+
+/* SHOW THREAD PAGE */
+#postContent {
+    font-size: 19px;
+}
+
+.post {
+    border: 1px solid #adadad;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+#commentDate {
+    font-style: italic;
+}
+
+.commentBody {
+    border: 1px solid #adadad;
+    margin: 10px;
+    padding: 8px;
+}
+
+.newComment {
+    padding: 10px;
+}
+
+input#username {
+    width: 150px;
+}
+
+textarea#comment {
+    width: 300px;
 }

@@ -7,9 +7,18 @@ block content
   br
   a(href='/newthread') New Thread
 
-  ul
+
     each post, i in posts
-      li
-        a(href="thread/#{post._id}")
-          //span #{post._id} >>>> #{post.op} >>>> #{post.postContent}
-          span #{post._id} >>>> #{post.op} >>>> #{post.postTitle}: #{post.postContent}
+
+        .thread
+          a(href="thread/#{post._id}")
+            //span #{post._id} >>>> #{post.op} >>>> #{post.postContent}
+
+            span#postTitle #{post.postTitle}
+          | &nbsp;created at&nbsp;
+          span#createdAt #{post.createdAt}
+          //#{post.bumpedAt}> >>>>
+          | &nbsp;by&nbsp;
+          span#op #{post.op}
+          br
+          span#content #{post.postContent}

@@ -6,9 +6,9 @@ router.get('/', function(req, res, next) {
     var db = req.db;
     var collection = db.get('documents');
     collection.find( { $query: {}, $orderby: { "bumpedAt": -1 } },{}, function(e,docs) {
+
         res.render('index', { title: 'Index', posts: docs });
     })
-
 });
 
 /* GET new thread page */
@@ -66,7 +66,8 @@ router.post('/postthread', function(req, res) {
         "postTitle": postTitle,
         "postContent": postContent,
         "createdAt": createdAt,
-        "bumpedAt": createdAt
+        "bumpedAt": createdAt,
+        "comments": []
     }, function (err, doc) {
         if (err) {
             res.send("Error while saving your post.");

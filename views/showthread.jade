@@ -1,9 +1,5 @@
 extends layout
 
-block head
-    - var pageTitle = #{posts[0].postTitle}
-
-
 block content
   h1= title
     br
@@ -11,8 +7,10 @@ block content
 
   a(href='/') Back to Index
   p
-    span Posted by:
-    span #{posts[0].op}
+    span Posted by:&nbsp;
+    span#opName #{posts[0].op}
+    | &nbsp;on&nbsp;
+    span#postTime #{posts[0].createdAt}
   .post
     p#postContent #{posts[0].postContent}
 

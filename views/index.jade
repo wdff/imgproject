@@ -14,7 +14,8 @@ block content
           a(href="thread/#{post._id}")
             //span #{post._id} >>>> #{post.op} >>>> #{post.postContent}
 
-            span#postTitle #{post.postTitle}
+            span#postTitle #{post.postTitle}&nbsp;
+          span#commentCount (#{post.comments.length})
           | &nbsp;created at&nbsp;
           span#createdAt #{post.createdAt}
           //#{post.bumpedAt}> >>>>

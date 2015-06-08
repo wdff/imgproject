@@ -1,14 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var database = require('../models/db');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var db = req.db;
-    var collection = db.get('documents');
-    collection.find( { $query: {}, $orderby: { "bumpedAt": -1 } },{}, function(e,docs) {
-
-        res.render('index', { title: 'Index', posts: docs });
-    })
+    database.loadAll(req, res);
 });
 
 /* GET new thread page */

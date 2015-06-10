@@ -1,28 +1,32 @@
 var express = require('express');
 var router = express.Router();
+
 var database = require('../models/db');
+var thread = require('../models/thread');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    database.loadAll(req, res);
+    thread.loadAll('documents', function(err, docs){
+        if (err) {
+            console.log("error in loadAll callback");
+            console.log(err);
+        } else {
+            console.dir(docs);
+        res.render('index', { title: 'Index', posts: docs });
+        }
+    });
 });
 
 /* GET new thread page */
 router.get('/newthread', function(req, res) {
     res.render('newthread', {title: 'New Thread'});
-})
+});
 
-router.get('/thread/:id', function(req, res) {
-    var db = req.db;
-    var collection = db.get('documents');
-    collection.find({_id: req.params.id },function (e,docs) {
-        res.render('showthread', {title: 'Thread ' + req.params.id, posts: docs});
-    })
-})
+
 
 router.get('/delete', function(req, res) {
     res.render('deletethread', {title: 'Delete a Thread'});
-})
+});
 
 router.post('/deletethread', function(req, res) {
     var db = req.db;

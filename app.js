@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var http = require('http');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var threads = require('./routes/threads');
 var database = require('./models/db');
 
 
@@ -17,11 +17,12 @@ var database = require('./models/db');
 
 var app = express();
 // hook db to request
+/*
 app.use(function(req,res,next){
     req.db = database.db;
     next();
 });
-
+*/
 
 var os = require( 'os' );
 
@@ -56,7 +57,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/thread', threads);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

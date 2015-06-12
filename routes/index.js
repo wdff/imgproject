@@ -1,17 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    thread.loadAll('documents', function(err, docs){
-        if (err) {
-            console.log("error in loadAll callback");
-            console.log(err);
-        } else {
-            console.dir(docs);
-        res.render('index', { title: 'Index', posts: docs });
-        }
-    });
+var thread = require('../models/thread');
+
+router.get('/', function(req, res) {
+    thread.loadAll(function(err, items) {
+        res.render('index', { posts: items });
+    })
 });
+
+
+
 
 module.exports = router;

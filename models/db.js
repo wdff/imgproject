@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var db_singleton = null;
 
-module.exports.getConnection = function(uri, options, callback) {
+module.exports = function getConnection(uri, options, callback) {
     if (db_singleton) {
         return callback(null, db_singleton);
     }

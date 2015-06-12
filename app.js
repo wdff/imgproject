@@ -9,10 +9,12 @@ var bodyParser = require('body-parser');
 var http = require('http');
 
 var app = express();
-var os = require( 'os' );
+var os = require('os');
 var networkInterfaces = os.networkInterfaces( );
 var addr = networkInterfaces['eth1']['0']['address'];
 
+var index = require('./routes/index');
+var threadview = require('./routes/threadview');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,7 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-app.use('/', routes);
+app.use('/', index);
+app.use('/thread', threadview);
 
 
 

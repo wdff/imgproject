@@ -5,7 +5,6 @@ module.exports.getConnection = function(uri, options, callback) {
     if (db_singleton) {
         return callback(null, db_singleton);
     }
-    uri = 'mongodb://localhost:27017/imgproject';
     MongoClient.connect(uri, options, function(err, db) {
         if (err) {
             console.log('Error creating database connection: ' + err);
@@ -16,7 +15,6 @@ module.exports.getConnection = function(uri, options, callback) {
         return callback(err, db_singleton);
     });
 };
-
 
 
 

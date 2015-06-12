@@ -8,34 +8,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
 
-var routes = require('./routes/index');
-var threads = require('./routes/threads');
-var database = require('./models/db');
-
-
-
-
 var app = express();
-// hook db to request
-/*
-app.use(function(req,res,next){
-    req.db = database.db;
-    next();
-});
-*/
-
 var os = require( 'os' );
-
 var networkInterfaces = os.networkInterfaces( );
-
 var addr = networkInterfaces['eth1']['0']['address'];
-
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
 app.set('port', process.env.PORT || 8000);
 app.use(express.static(__dirname + '/app'));
 
@@ -57,7 +38,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-app.use('/thread', threads);
+
+
+
+
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -67,7 +51,6 @@ app.use(function(req, res, next) {
 });
 
 /// error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {

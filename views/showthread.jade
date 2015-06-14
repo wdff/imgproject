@@ -3,16 +3,18 @@ extends layout
 block content
   h1= title
     br
-    h2 >> #{posts.postTitle}
 
   a(href='/') Back to Index
+
+
+  .post
+    p#postContent #{posts.postContent}
+
   p
     span Posted by:&nbsp;
     span#opName #{posts.op}
     | &nbsp;on&nbsp;
     span#postTime #{posts.createdAt}
-  .post
-    p#postContent #{posts.postContent}
 
   - var comments = posts.comments
   if posts.comments

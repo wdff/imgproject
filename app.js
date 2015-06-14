@@ -14,7 +14,7 @@ var networkInterfaces = os.networkInterfaces( );
 var addr = networkInterfaces['eth1']['0']['address'];
 
 var index = require('./routes/index');
-var threadview = require('./routes/threadview');
+var threadview = require('./routes/thread');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', index);
+app.use('/newthread', index);
 app.use('/thread', threadview);
 
 

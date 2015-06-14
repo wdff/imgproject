@@ -12,7 +12,7 @@ block content
     each post, i in posts
 
         .thread
-          a(href="thread/#{post._id}")
+          a(href="/thread/#{post._id}")
             //span #{post._id} >>>> #{post.op} >>>> #{post.postContent}
             span#postTitle #{post.postTitle}&nbsp;
           span#commentCount (#{post.comments.length})

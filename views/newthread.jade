@@ -3,7 +3,7 @@ extends layout
 
 block content
     h1= title
-    form#newThread(name="newthread",method="post",action="/postthread")
+    form#newThread(name="newthread",method="post",action="/newthread")
         input#op(type="text",placeholder="Your Name (optional)", name="username")
         br
         input#title(type="text",placeholder="Title (optional)", name="posttitle")

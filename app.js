@@ -11,7 +11,7 @@ var http = require('http');
 var app = express();
 var os = require('os');
 var networkInterfaces = os.networkInterfaces( );
-var addr = networkInterfaces['eth1']['0']['address'];
+var addr = networkInterfaces['eth0']['0']['address'];
 
 var index = require('./routes/index');
 var threadview = require('./routes/thread');
@@ -40,7 +40,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', index);
-app.use('/newthread', index);
 app.use('/thread', threadview);
 
 

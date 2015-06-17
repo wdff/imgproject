@@ -16,8 +16,19 @@ router.get('/newthread', function(req, res) {
 });
 
 router.post('/newthread', function(req, res) {
-    threads.save(req, res);
+    var time = new Date();
+    var toInsert = {
+        "op"            : req.body.username ||"Anonymous",
+        "postTitle"     : req.body.posttitle || "No Title",
+        "postContent"   : req.body.postcontent,
+        "createdAt"     : time,
+        "bumpedAt"      : time,
+        "comments"      : []
+    };
+    threads.save(req, res, toInsert);
 });
+
+
 
 
 module.exports = router;

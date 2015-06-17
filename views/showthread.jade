@@ -1,4 +1,4 @@
-extends layout
+extends threadLayout
 
 block content
   h1= title
@@ -16,23 +16,25 @@ block content
     | &nbsp;on&nbsp;
     span#postTime #{posts.createdAt}
 
-  - var comments = posts.comments
-  if posts.comments
-
-      each comment, i in posts.comments
-        .commentBody
-          span#commentCounter #{i+1}&nbsp;
-          span#commentAuthor #{comment.author} &nbsp;
-          span#commentDate (#{comment.posted})
-          br
-
-          br
-          span#commentText #{comment.comment}
+  if posts.comments.length > 0
+    span Comments: #{posts.comments.length}
+    | &nbsp;
+    button#toBottomButton To newest
+    each comment, i in posts.comments
+      .commentBody
+        span#commentCounter #{i+1}&nbsp;
+        span#commentAuthor #{comment.author} &nbsp;
+        span#commentDate (#{comment.posted})
+        br
+        br
+        span#commentText #{comment.comment}
   else
     span No Comments yet!
 
+  hr#bottom
+
   .newComment
-    form#newComment(name="newComment",method="post",action="/newcomment")
+    form#newComment(name="newComment" method="POST" action="/thread/#{posts._id}/addcomment")
       input#threadId(type="hidden",value="#{posts._id}", name="threadid")
       input#username(type="text",placeholder="Your Name (optional)", name="username")
       br

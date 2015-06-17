@@ -32,6 +32,10 @@ a {
     font-size: 19px;
 }
 
+.deleteThreadButton {
+    float: right;
+}
+
 
 /* SHOW THREAD PAGE */
 #postContent {

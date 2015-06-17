@@ -3,5 +3,5 @@ extends layout
 block content
     h1 Delete a Thread
     form#delThread(name="delthread",method="post",action="/deletethread")
-        input#threadId(type="text",placeholder="Thread ID", name="threadId")
+        input#threadId(type="text",value="#{threadId}", name="threadId")
         button#delThread(type="submit") submit

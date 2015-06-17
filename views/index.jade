@@ -3,23 +3,26 @@ extends layout
 block content
   h1 Index lol
   p Welcome to some nice shit
-  a(href='/delete') Delete Thread
   br
   a(href='/newthread') New Thread
   br
-  span threads: #{posts.length}
+  span threads:
+  span#threadCount #{posts.length}
 
+  .threadWrapper
     each post, i in posts
 
         .thread
           a(href="/thread/#{post._id}")
             //span #{post._id} >>>> #{post.op} >>>> #{post.postContent}
-            span#postTitle #{post.postTitle}&nbsp;
+            span#postTitle #{post.postTitle}
+          | &nbsp;
           span#commentCount (#{post.comments.length})
           | &nbsp;created at&nbsp;
           span#createdAt #{post.createdAt}
           //#{post.bumpedAt}> >>>>
           | &nbsp;by&nbsp;
           span#op #{post.op}
+          button.deleteThreadButton(type="submit") X
           br
           span#content #{post.postContent}

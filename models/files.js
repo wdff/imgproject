@@ -1,20 +1,21 @@
-var db = require('./db');
-var uri = 'mongodb://localhost:27017/imgproject';
-var coll = 'files';
-var Oid = require('mongodb').ObjectId;
-var Grid = db.Grid;
+var express = require('express');
+var router = express.Router();
 
-var grid = new Grid(db, 'files');
 
-var buffer = new Buffer("Hello world");
-grid.put(buffer, {metadata:{category:'text'}, content_type: 'text'}, function(err, fileInfo) {
-    if(!err) {
-        console.log("Finished writing file to Mongo");
+/**
+ * Parses uploaded files (passed through multer).
+ * Attaches filetype and file link to the request to insert into the DB
+ * @param req request
+ * @param res response
+ * @param cb callback
+ */
+module.exports.upload = function(req, res, cb) {
+    if (req.files.fileUpload.mimetype == "image/png" || "image/gif" || "image/jpeg" || "video/mp4" || "video/webm") {
+    req.fileType = req.files.fileUpload.mimetype;
+    req.fileLink = req.files.fileUpload.name;
+    //console.log("file link: " + req.fileLink);
+    cb(req, res);
+    } else {
+        res.send("Wrong filetype! You can only upload .png, .gif, .jpeg, .mp4 and .webm files.");
     }
-});
-
-grid.get(fileInfo._id, function(err, data) {
-    console.log("Retrieved data: " + data.toString());
-    grid.delete(fileInfo._id, function(err, result) {
-    });
-});
+};

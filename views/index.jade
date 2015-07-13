@@ -1,28 +1,51 @@
 extends layout
 
 block content
-  h1 Index lol
-  p Welcome to some nice shit
-  br
+  img#logo(src="/images/logo.png")
   a(href='/newthread') New Thread
   br
-  span threads:
+  span Threads:
   span#threadCount #{posts.length}
+  br
+  br
+
+  if (user)
+    p You are logged in as #{user.username} &nbsp;
+      a(href='/logout') [Log Out]
+  else
+    a(href='/login') Log In
+    | &nbsp;|&nbsp;
+    a(href='/register') Register
 
   .threadWrapper
     each post, i in posts
-
-        .thread
-          a(href="/thread/#{post._id}")
-            //span #{post._id} >>>> #{post.op} >>>> #{post.postContent}
-            span#postTitle #{post.postTitle}
-          | &nbsp;
-          span#commentCount (#{post.comments.length})
-          | &nbsp;created at&nbsp;
-          span#createdAt #{post.createdAt}
-          //#{post.bumpedAt}> >>>>
-          | &nbsp;by&nbsp;
-          span#op #{post.op}
-          button.deleteThreadButton(type="submit") X
-          br
-          span#content #{post.postContent}
+        .thread.col-md-12
+          .threadHeadline
+            a(href="/thread/#{post._id}")
+              //span #{post._id} >>>> #{post.op} >>>> #{post.postContent}
+              span.postTitle #{post.postTitle}
+            | &nbsp;
+            span.commentCount (#{post.comments.length})
+            | &nbsp;created at&nbsp;
+            span.createdAt #{post.createdAt}
+            //#{post.bumpedAt}> >>>>
+            | &nbsp;by&nbsp;
+            span.op #{post.op}
+            if (user)
+              button.close.deleteThreadButton(type='submit') [delete]
+                //span(aria-hidden='true') ×
+            //button.deleteThreadButton(type="submit") X
+          .ThreadContent
+            if post.postFileLink
+              case post.postFileType
+                when "image/png"
+                when "image/gif"
+                when "image/jpeg"
+                  img.postpic(src="/files/#{post.postFileLink}")
+                when "video/mp4"
+                when "video/webm"
+                  video.postvideo(width="200", height="150", controls, preload="metadata")
+                    source(src="/files/#{post.postFileLink}", type="#{post.postFileType}")
+                    | Sorry, your browser does not support the video tag. No Videos for you!
+            span.threadContent #{post.postContent}
+          .clearfix

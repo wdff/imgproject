@@ -1,12 +1,24 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: #EDF0FF;
 }
 
 a {
   color: #00B7FF;
-    text-decoration: none;
+  text-decoration: none;
 }
+
+a:hover {
+    color: #00B7FF;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #aaa;
+}
+
+video {
+    float: left;
+}
+
 
 /* INDEX PAGE */
 .thread {
@@ -14,10 +26,15 @@ a {
     border: 1px solid #adadad;
     border-radius: 3px;
     padding: 10px;
+    margin-bottom: 15px;
+    background-color: #EDF0FF;
 }
 
+
+
 .thread:hover {
-    background-color: #ededed;
+    background-color: #DCE9FA;
+    box-shadow: inset 0 0 3px #8a8a8a;
 }
 
 #postTitle {
@@ -36,10 +53,59 @@ a {
     float: right;
 }
 
+.threadHeadline {
+    background-color: #DDE7F0;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.ThreadContent {
+    margin-top: 25px;
+}
+
+.threadContent {
+    white-space: pre-wrap;
+}
+
+img#logo {
+    width:100%;
+    box-shadow: none;
+}
 
 /* SHOW THREAD PAGE */
 #postContent {
     font-size: 19px;
+    white-space: pre-wrap;
+}
+
+.commentText {
+    white-space: pre-wrap;
+}
+
+img {
+    width: 150px;
+    height: 150px;
+    vertical-align: top;
+    margin-right: 15px;
+    float: left;
+    box-shadow: 0 0 5px 2px rgba(0,0,0,.35);
+}
+
+.clearfix {
+    clear:both;
+}
+
+.post > img {
+    float: left;
+}
+
+
+.headline {
+    margin: 5px;
+}
+
+.content {
+    margin:5px;
 }
 
 .post {
@@ -53,10 +119,12 @@ a {
 }
 
 .commentBody {
+    background-color: #EDF0FF;
     border: 1px solid #adadad;
     margin: 10px;
     padding: 8px;
     word-wrap: break-word;
+
 }
 
 .newComment {
@@ -65,8 +133,118 @@ a {
 
 input#username {
     width: 150px;
+    margin-bottom: 15px;
 }
 
 textarea#comment {
     width: 300px;
+}
+
+/* NEWTHREAD PAGE */
+form#newThread {
+    width: 50%;
+    margin: 0 auto;
+}
+
+h1#new {
+    text-align: center;
+}
+
+button#newThread {
+    float:right;
+}
+
+/* MEDIA QUERIES */
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+
+    /* INDEX PAGE */
+    body,
+    span.postTitle {
+        font-size: 50px;
+    }
+
+    .thread {
+        border: 3px solid #aaa;
+    }
+
+
+    .threadHeadline {
+        font-size: 20px;
+    }
+
+    /* SHOWTHREAD PAGE */
+
+    #postContent {
+        font-size: 50px;
+    }
+
+    .postMeta,
+    .commentBody .headline {
+        font-size: 11px;
+    }
+
+    input#username,
+    textarea#comment {
+        width: 100%;
+    }
+
+
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen
+and (min-width : 321px) {
+    /* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+    /* Styles */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+    /* Styles */
+}
+
+/* iPads (landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+    /* Styles */
+}
+
+/* iPads (portrait) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+    /* Styles */
+}
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-width : 1224px) {
+    /* Styles */
+}
+
+/* Large screens ----------- */
+@media only screen
+and (min-width : 1824px) {
+    /* Styles */
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+    /* Styles */
 }

@@ -1,0 +1,16 @@
+extends layout
+
+
+block content
+    a(href="/")
+        img#logo(src="/images/logo.png")
+    h1= title
+    form#loginForm(name="login",method="post",action="/login")
+        input#name(type="text",placeholder="Username", name="username")
+        br
+        input#pw(type="password",placeholder="Password", name="password")
+        br
+        .message
+        span #{message}
+        br
+        button#login(type="submit") Log In

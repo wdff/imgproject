@@ -1,6 +1,13 @@
 var MongoClient = require('mongodb').MongoClient;
 var db_singleton = null;
 
+/**
+ * MongoDB Connection Singleton
+ * @param uri URI of the DB
+ * @param options options for the connection
+ * @param callback to be executed after connection
+ * @returns {*} Connection instance
+ */
 module.exports = function getConnection(uri, options, callback) {
     if (db_singleton) {
         return callback(null, db_singleton);
@@ -15,31 +22,3 @@ module.exports = function getConnection(uri, options, callback) {
         return callback(err, db_singleton);
     });
 };
-
-
-
-
-
-/*
-
-
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/imgproject');
-
-
-
-
-
-module.exports.loadAll = function(res, req) {
-var db = req.db;
-var collection = db.get('documents');
-collection.find( { $query: {}, $orderby: { "bumpedAt": -1 } },{}, function(e,docs) {
-    res.render('index', { title: 'Index', posts: docs });
-})};
-
-
-
-module.exports.db = db;
-
-    */

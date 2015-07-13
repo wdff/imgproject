@@ -2,12 +2,15 @@ extends layout
 
 
 block content
-    h1= title
-    form#newThread(name="newthread",method="post",action="/newthread")
-        input#op(type="text",placeholder="Your Name (optional)", name="username")
-        br
-        input#title(type="text",placeholder="Title (optional)", name="posttitle")
-        br
-        textarea#postContent(rows="4", placeholder="Your Post", name="postcontent")
-        br
-        button#newThread(type="submit") submit
+    a(href="/")
+      img#logo(src="/images/logo.png")
+    h1#new= title
+    form#newThread(enctype="multipart/form-data" name="newthread",method="post",action="/newthread")
+      .form-group
+        input#op.form-control.input-sm(type="text",placeholder="Your Name (optional, 20 characters max.)", name="username")
+        input#title.form-control.input-sm(type="text",placeholder="Title (optional, 30 characters max.)", name="posttitle")
+        textarea#postContent.form-control(rows="4", placeholder="Your Post", name="postcontent" required)
+      .form-group
+        label(for="fileUpload") Select a file to upload:
+        input#fileChooser.form-control(type="file" name="fileUpload")
+        button#newThread.btn.btn-default(type="submit") submit

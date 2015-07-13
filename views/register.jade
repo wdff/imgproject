@@ -1,0 +1,13 @@
+extends layout
+
+
+block content
+    a(href="/")
+        img#logo(src="/images/logo.png")
+    h1= title
+    form#registerForm(name="register",method="post",action="/register")
+        input#name(type="text",placeholder="Username", name="username")
+        br
+        input#pw(type="password",placeholder="Password", name="password")
+        br
+        button#register(type="submit") Register

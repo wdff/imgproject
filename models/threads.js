@@ -3,6 +3,11 @@ var uri = 'mongodb://localhost:27017/imgproject';
 var coll = 'documents';
 var Oid = require('mongodb').ObjectId;
 
+
+/**
+ * Loads all threads from the DB.
+ * @param cb callback
+ */
 module.exports.loadAll = function(cb) {
     db(uri, {}, function(err, db) {
         db.collection(coll, function(err, collection) {
@@ -12,31 +17,34 @@ module.exports.loadAll = function(cb) {
                     $orderby: { "bumpedAt": -1 }
                 }
             ).toArray(function(err, items) {
-                console.log("Found items: " + items.length);
-                cb(null, items);
-            })
+                    console.log("Found items: " + items.length);
+                    cb(null, items);
+                })
         });
     })
 };
 
+/**
+ * Loads one thread from the DB.
+ * @param id the ID of the thread to load
+ * @param cb callback
+ */
 module.exports.loadOne = function(id, cb) {
     db(uri, {}, function(err, db) {
         db.collection(coll, function(err, collection) {
             if (err) {
                 console.log(err);
             } else {
-                console.log("searching for id: " + id);
-                console.log("converted to Oid: " + new Oid(id));
                 collection.findOne( { _id: new Oid(id) }, {}, function(err, item) {
                     if (err) {
                         console.log("error " + err);
                         cb(err);
                     } else if (item) {
-                        console.log("Found item!");
-                        console.dir(item);
+                        console.log("Found thread!");
+                        //console.dir(item);
                         cb(null, item);
                     } else {
-                        console.log("Found NO items");
+                        console.log("Found NO threads");
                         cb(err);
                     }
                 })
@@ -45,6 +53,12 @@ module.exports.loadOne = function(id, cb) {
     })
 };
 
+/**
+ * Saves a thread to the DB.
+ * @param req request
+ * @param res response
+ * @param toInsert the thread to insert
+ */
 module.exports.save = function(req, res, toInsert) {
     db(uri, {}, function(err, db) {
         db.collection(coll, function(err, collection) {
@@ -52,15 +66,15 @@ module.exports.save = function(req, res, toInsert) {
             console.log("Saving...");
             collection.insertOne(toInsert, {}, function (err, doc) {
                 if (err) {
-                    res.send ("Error while saving your post.")
+                    res.send ("Error while saving your Thread.")
                 } else {
                     console.log("Saved!");
-                    console.dir(doc);
+                    //console.dir(doc);
                     var threadId = doc.ops[0]._id;
-                        //res.location('/thread/' + threadId);
-                        //console.log("reloacting to " + threadId);
-                        res.redirect('/thread/' + threadId);
-                        console.log("redirecting to " + threadId);
+                    //res.location('/thread/' + threadId);
+                    //console.log("reloacting to " + threadId);
+                    res.redirect('/thread/' + threadId);
+                    console.log("redirecting to " + threadId);
 
                 }
             })
@@ -68,6 +82,12 @@ module.exports.save = function(req, res, toInsert) {
     })
 };
 
+/**
+ * Deletes a thread from the DB
+ * @param req request
+ * @param res response
+ * @param toDelete the ID of the thread to delete
+ */
 module.exports.deleteThread = function(req, res, toDelete) {
     db(uri, {}, function(err, db) {
         db.collection(coll, function(err, collection) {
@@ -87,23 +107,38 @@ module.exports.deleteThread = function(req, res, toDelete) {
     })
 };
 
+/**TODO
+ * Deletes a comment from a thread
+ * @param req request
+ * @param res response
+ * @param threadId ID of the thread
+ * @param toDelete ID of the comment
+ */       /*
+ module.exports.deleteComment = function(req, res, threadId, toDelete) {
+ }
+ */
+
+/**
+ * Updates a thread (Insert a comment)
+ * @param id the Thread's ID
+ * @param toUpdate the comment to insert
+ * @param cb callback
+ */
 module.exports.updateThread = function(id, toUpdate, cb) {
     db(uri, {}, function(err, db) {
-      db.collection(coll, function(err, collection) {
-          console.log("Updating thread " + id);
-          console.dir(toUpdate);
-          collection.findOneAndUpdate(
-              { _id: new Oid(id)},
-              toUpdate,
-              { returnOriginal: false }
-          , function(err, doc) {
-              if (err) {
-                  cb(err, null);
-              } else {
-                  cb(null, doc);
-              }
-          });
-      });
+        db.collection(coll, function(err, collection) {
+            console.log("Updating thread " + id);
+            collection.findOneAndUpdate(
+                { _id: new Oid(id)},
+                toUpdate,
+                { returnOriginal: false }
+                , function(err, doc) {
+                    if (err) {
+                        cb(err, null);
+                    } else {
+                        cb(null, doc);
+                    }
+                });
+        });
     });
-
 };

@@ -60,12 +60,30 @@ $(document).ready(function() {
             })
     });
 
-    /*  TODO delete comments
+    //  TODO delete comments
     $('.deleteCommentButton').on('click', function(event) {
-        var commentIter = $(event.target).parent().siblings('.commentCounter').text();
-            //delete this comment
+        var commentIter = parseInt($(event.target).siblings('.commentCounter').text()) - 1;
+        var url = location + '/deletecomment';
+
+        $.ajax({
+            type            : "POST",
+            data            : JSON.stringify({deleteCommentId: commentIter}),
+            contentType     : 'application/json; charset=utf-8',
+            dataType        : "json",
+            url             : url
+        }).done(function(data) {
+                if (data.deleted == "yes") {
+                    console.log("deleted!");
+                    $(event.target).parent().parent().addClass('deleted');
+                    $(event.target).remove();
+                    //$('#threadCount').text(parseInt($('#threadCount').text()) -1);
+                }
+                console.log(data);
+            })
     });
-    */
+
+
+
 
 
     /**

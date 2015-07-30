@@ -142,3 +142,36 @@ module.exports.updateThread = function(id, toUpdate, cb) {
         });
     });
 };
+
+module.exports.deleteComment = function(id, toDelete, cb) {
+
+    var commentId = toDelete;
+    var which = "comments." + toDelete;
+
+    var selector = {};
+    var operator = {};
+    selector['comments.' + commentId + '.deleted'] = 1;
+    operator['$set'] = selector;
+
+    console.log(operator);
+
+        db(uri, {}, function(err, db) {
+        db.collection(coll, function(err, collection) {
+            console.log("deleting comment " + toDelete + " from thread " + id);
+            collection.findOneAndUpdate(
+                { _id: new Oid(id)},
+                operator,
+                { returnOriginal: false }
+                , function(err, doc) {
+                    if (err) {
+                        cb(err, null);
+                    } else {
+                        cb(null, doc);
+                    }
+                });
+
+
+
+        })
+    })
+};

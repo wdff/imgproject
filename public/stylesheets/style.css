@@ -140,6 +140,12 @@ textarea#comment {
     width: 300px;
 }
 
+.deleted {
+    color: #999;
+    background-color: #EFEFEF;
+}
+
+
 /* NEWTHREAD PAGE */
 form#newThread {
     width: 50%;

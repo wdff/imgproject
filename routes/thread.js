@@ -16,6 +16,8 @@ router.get('/:id', function(req, res) {
             console.log(err);
         } else {
 
+            console.dir(item);
+            //console.log(item.comments[1]);
             res.render('showthread', {
                 title: item.postTitle,
                 posts: item,
@@ -56,7 +58,15 @@ router.post('/:id/addcomment', function(req, res) {
  * POST Route for deleting comments.
  */
 router.post('/:id/deletecomment', function(req, res) {
-    //
+    var threadId = req.params.id;
+    var commentId = req.body.deleteCommentId;
+    threads.deleteComment(threadId, commentId, function(err) {
+        if (err) {console.log("error while deleting comment!");}
+        else {
+            console.log("comment deleted!");
+            res.json({"deleted": "yes", "iter": commentId});
+        }
+    })
 });
 
 /**
@@ -77,6 +87,7 @@ function addComment(req, res) {
         "$currentDate": { "bumpedAt": true },
         "$push": {
             "comments": {
+                "deleted"   : 0,
                 "posted"    : date,
                 "author"    : userName,
                 "comment"   : comment,

@@ -1,86 +1,145 @@
 extends threadLayout
 
 block content
-  a(href="/")
-    img#logo(src="/images/logo.png")
+    a(href="/")
+        img#logo(src="/images/logo.png")
 
-  h1= title
+    h1= title
+        br
+
+    a(href='/') Back to Index
     br
-
-  a(href='/') Back to Index
-  br
-  if (user)
-    p You are logged in as #{user.username} &nbsp;
-      a(href='/logout') [Log Out]
+    if (user)
+        p You are logged in as #{user.username} &nbsp;
+            a(href='/logout') [Log Out]
 
 
 
-  .post
-    if posts.postFileLink
-      case posts.postFileType
-        when "image/png"
-        when "image/gif"
-        when "image/jpeg"
-          img.postpic(src="/files/#{posts.postFileLink}")
-        when "video/mp4"
-        when "video/webm"
-          video.postvideo(width="200", height="150", controls, preload="metadata")
-            source(src="/files/#{posts.postFileLink}", type="#{posts.postFileType}")
-            | Sorry, your browser does not support the video tag. No Videos for you!
-    span#postContent #{posts.postContent}
-    .clearfix
-
-
-  .postMeta
-    span Posted by:&nbsp;
-    span#opName #{posts.op}
-    | &nbsp;on&nbsp;
-    span#postTime #{posts.createdAt}
-
-  if posts.comments.length > 0
-    span Comments: #{posts.comments.length}
-    | &nbsp;
-    button#toBottomButton To newest
-    each comment, i in posts.comments
-      .commentBody
-        .headline
-          span.commentCounter #{i+1}&nbsp;
-          span.commentAuthor #{comment.author} &nbsp;
-          span.commentDate (#{comment.posted})
-          //if (user)
-            button.close.deleteCommentButton(type='submit', aria-label='Close')
-              span(aria-hidden='true') ×
-        .content
-          if comment.fileLink
-            case comment.fileType
-              when "image/png"
-              when "image/gif"
-              when "image/jpeg"
-                img.postpic(src="/files/#{comment.fileLink}")
-              when "video/mp4"
-              when "video/webm"
-                video.postvideo(width="200", height="150", controls, preload="metadata")
-                  source(src="/files/#{comment.fileLink}", type="#{comment.fileType}")
-                  | Sorry, your browser does not support the video tag. No Videos for you!
-          span.commentText #{comment.comment}
-
+    .post
+        if posts.postFileLink
+            case posts.postFileType
+                when "image/png"
+                when "image/gif"
+                when "image/jpeg"
+                    img.postpic(src="/files/#{posts.postFileLink}")
+                when "video/mp4"
+                when "video/webm"
+                    video.postvideo(width="200", height="150", controls, preload="metadata")
+                        source(src="/files/#{posts.postFileLink}", type="#{posts.postFileType}")
+                        | Sorry, your browser does not support the video tag. No Videos for you!
+        span#postContent #{posts.postContent}
         .clearfix
-  else
-    span No Comments yet!
 
-  hr#bottom
 
-  .newComment
-    form#newComment(enctype="multipart/form-data" name="newComment" method="POST" action="/thread/#{posts._id}/addcomment")
-      input#threadId(type="hidden",value="#{posts._id}", name="threadid")
-      input#username(type="text",placeholder="Your Name (optional)", name="username")
-      br
-      textarea#comment(rows="4", placeholder="Your Comment", name="commentContent" class="commentData")
-      br
-      label(for="fileChooser") Select a file to upload:
-      input#fileChooser(type="file" name="fileUpload" class="commentData")
-      br
-      button#newComment(type="submit") submit
-      br
-    //form#fileUpload(enctype="multipart/form-data" action="/file/" method="POST")
-      input#submitFile(type="submit" value="Upload Image" name="submit")
+    .postMeta
+        span Posted by:&nbsp;
+        span#opName #{posts.op}
+        | &nbsp;on&nbsp;
+        span#postTime #{posts.createdAt}
+
+    if posts.comments.length > 0
+        span Comments: #{posts.comments.length}
+        | &nbsp;
+        button#toBottomButton To newest
+        each comment, i in posts.comments
+            if user
+                if comment.deleted
+                    .commentBody.deleted
+                        .headline
+                            span.commentCounter #{i+1}&nbsp;
+                            span.commentAuthor #{comment.author} &nbsp;
+                            span.commentDate (#{comment.posted})
+                            .content
+                                if comment.fileLink
+                                    case comment.fileType
+                                        when "image/png"
+                                        when "image/gif"
+                                        when "image/jpeg"
+                                            img.postpic(src="/files/#{comment.fileLink}")
+                                        when "video/mp4"
+                                        when "video/webm"
+                                            video.postvideo(width="200", height="150", controls, preload="metadata")
+                                                source(src="/files/#{comment.fileLink}", type="#{comment.fileType}")
+                                                | Sorry, your browser does not support the video tag. No Videos for you!
+                                span.commentText #{comment.comment}
+                            .clearfix
+                else
+                    .commentBody
+
+                        .headline
+                            span.commentCounter #{i+1}&nbsp;
+                            span.commentAuthor #{comment.author} &nbsp;
+                            span.commentDate (#{comment.posted})
+                            if (user)
+                                button.close.deleteCommentButton(type='submit') [delete]
+                        .content
+                            if comment.fileLink
+                                case comment.fileType
+                                    when "image/png"
+                                    when "image/gif"
+                                    when "image/jpeg"
+                                        img.postpic(src="/files/#{comment.fileLink}")
+                                    when "video/mp4"
+                                    when "video/webm"
+                                        video.postvideo(width="200", height="150", controls, preload="metadata")
+                                            source(src="/files/#{comment.fileLink}", type="#{comment.fileType}")
+                                            | Sorry, your browser does not support the video tag. No Videos for you!
+                            span.commentText #{comment.comment}
+
+                        .clearfix
+
+
+
+            else if comment.deleted
+                .commentBody.deleted
+                    .headline
+                        span.commentCounter #{i+1}&nbsp;
+                        span.commentAuthor #{comment.author} &nbsp;
+                        span.commentDate (#{comment.posted})
+
+                        .content
+                            span.commentText This comment has been deleted.
+                        .clearfix
+
+
+            else
+                .commentBody
+
+                    .headline
+                        span.commentCounter #{i+1}&nbsp;
+                        span.commentAuthor #{comment.author} &nbsp;
+                        span.commentDate (#{comment.posted})
+                    .content
+                        if comment.fileLink
+                            case comment.fileType
+                                when "image/png"
+                                when "image/gif"
+                                when "image/jpeg"
+                                    img.postpic(src="/files/#{comment.fileLink}")
+                                when "video/mp4"
+                                when "video/webm"
+                                    video.postvideo(width="200", height="150", controls, preload="metadata")
+                                        source(src="/files/#{comment.fileLink}", type="#{comment.fileType}")
+                                        | Sorry, your browser does not support the video tag. No Videos for you!
+                        span.commentText #{comment.comment}
+
+                    .clearfix
+    else
+        span No Comments yet!
+
+    hr#bottom
+
+    .newComment
+        form#newComment(enctype="multipart/form-data" name="newComment" method="POST" action="/thread/#{posts._id}/addcomment")
+            input#threadId(type="hidden",value="#{posts._id}", name="threadid")
+            input#username(type="text",placeholder="Your Name (optional)", name="username")
+            br
+            textarea#comment(rows="4", placeholder="Your Comment", name="commentContent" class="commentData")
+            br
+            label(for="fileChooser") Select a file to upload:
+            input#fileChooser(type="file" name="fileUpload" class="commentData")
+            br
+            button#newComment(type="submit") submit
+            br
+        //form#fileUpload(enctype="multipart/form-data" action="/file/" method="POST")
+          input#submitFile(type="submit" value="Upload Image" name="submit")
